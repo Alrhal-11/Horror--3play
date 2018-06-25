@@ -1,7 +1,7 @@
 const { Client, RichEmbed } = require("discord.js");
 const client = new Client({ disableEveryone: true})
 const ytdl = require("ytdl-core");
-const devs = ["340653929429729281" , "171259176029257728" , "349124522747887616" , "447804943454175232"]
+const devs = ["402043862480322562" , "342690534000951306"]
 const request = require("request");
 const convert = require("hh-mm-ss")
 const fs = require("fs");
@@ -22,11 +22,9 @@ client.on('message', async function(message) {
     //////////////////////////////////
     if(message.content === `<@${client.user.id}>`) return message.channel.send(`Hey I'am **${client.user.username}**, A nice music bot developed by: \`\`! HP , ء Moha,$ 55₅ , .#5555\`\``);
     // const noms = "** ❯ :musical_note: No music is playing, try ``m-play``" 
-    const novc = "**<:MxNo:460268184218632222> | You are not in a voice channel.**"
+    const novc = "**You are not in a voice channel.**"
     // const nomatch = "**<:MxNo:449703922190385153> You've to be in the same voice channel!**"
-    const yt = "<:MxYT:460267852784467968>"
-    const correct = client.guilds.get('421140321737506816').emojis.get("460267642381402114")
-    const nope = client.guilds.get('421140321737506816').emojis.get('460267356338257930')
+   
     // const member = message.member;
 
     if (message.content.startsWith(`${prefix}eval`)) {
@@ -137,12 +135,11 @@ client.on('message', async function(message) {
                     })
                     return message.channel.send(`[:musical_score: __${playlist.title}__] **${queuesync}** items Added to the **Queue**!`)                    ;
                 }
-                message.channel.send(`**${yt} Searching :mag_right: \`\`${args}\`\`**`).then(()=> {
+                message.channel.send(`**Searching :mag_right: \`\`${args}\`\`**`).then(()=> {
                 getID(args, function(id) {
                    fetchVideoInfo(id, function(err, videoInfo) {
                         if (err) throw new Error(err);
-                        if(videoInfo.duration > 1800) return message.channel.send(`**${message.author.username}, :x: Cannot play a video that's longer than 30 minutes**`).then(message.react(nope));
-                        else message.react(correct)
+                        if(videoInfo.duration > 1800) return message.channel.send(`**${message.author.username}, :x: Cannot play a video that's longer than 30 minutes**`)
                         add_to_queue(id, message);
                         message.channel.send(new RichEmbed()
                         .setAuthor("Added to queue", message.author.avatarURL)
@@ -173,12 +170,12 @@ client.on('message', async function(message) {
                     })
                     return message.channel.send(`[:musical_score: __${playlist.title}__] **${videos.slice(0, 100).length}** items Added to the **Queue**!\n**Playing :notes: \`\`${videos[0].title}\`\` - Now!**`)                    ;
                 }
-                message.channel.send(`${yt} **Searching :mag_right: \`\`${args}\`\` **`).then(() => {
+                message.channel.send(`**Searching :mag_right: \`\`${args}\`\` **`).then(() => {
                 getID(args, function(id) {
                     fetchVideoInfo(id, function(err, videoInfo) {
                         if (err) throw new Error(err);
-                        if(videoInfo.duration > 1800) return message.channel.send(`**${message.author.username}, :x: Cannot play a video that's longer than 30 minutes**`).then(message.react(nope))
-                        else message.react(correct)
+                        if(videoInfo.duration > 1800) return message.channel.send(`**${message.author.username}, :x: Cannot play a video that's longer than 30 minutes**`);
+                     
                         playMusic(id, message);
                         guilds[message.guild.id].isPlaying = true;
                         guilds[message.guild.id].queue.push(id);
@@ -212,7 +209,7 @@ client.on('message', async function(message) {
                 message.channel.send(`**:point_up::skin-tone-1: ${message.author.username} has vote to skip current song! **` + Math.ceil((guilds[message.guild.id].voiceChannel.members.size - 1) / 2) - guilds[message.guild.id].skipReq) + "**  more votes to skip! **";
             }
         } else {
-            message.reply("<:MxNo:460268184218632222> you already voted to skip!");
+            message.reply(":x:  you already voted to skip!");
         }
 
     } else if (mess.startsWith(prefix + "queue") || mess.startsWith(prefix+"قائمة")) {
@@ -239,7 +236,7 @@ client.on('message', async function(message) {
                  i = 0
                }
             let queuelist = guilds[message.guild.id].queueNames.slice(x-10,x).map(song => `**\`\`${++i}.\`\`** [${song}](https://www.youtube.com/watch?v=${guilds[message.guild.id].queue[i]})`).join('\n\n')
-            if(!queuelist) return message.channel.send(`<:MxNo:460268184218632222> | Page doesn't exist!`)
+            if(!queuelist) return message.channel.send(`:x:  | Page doesn't exist!`)
             return message.channel.send('', {embed: {
                 description: `__Now Playing:__\n**[${guilds[message.guild.id].queueNames[0]}](https://www.youtube.com/watch?v=${guilds[message.guild.id].queue[0]})**\n\n:arrow_down: __Up Next__  :arrow_down:\n\n${queuelist}\n\n**Total items in queue: ${guilds[message.guild.id].queueNames.length} | Page ${Math.floor(x/10)} of ${Math.floor((guilds[message.guild.id].queue.slice(1).length+10) /10)}**`,
                 thumbnail: {url: "https://upload.wikimedia.org/wikipedia/commons/7/73/YouTube_Music.png"} , 
@@ -283,7 +280,7 @@ if(mess.startsWith(prefix+"stop") || mess.startsWith(prefix+"اطلع")) {
     }
 }
 
-if(mess.startsWith(prefix+"stfu") || message.content.startsWith(`<@${client.user.id}> stfu`)) {
+if(mess.startsWith(prefix+"stuf") || message.content.startsWith(`<@${client.user.id}> stfu`)) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if(guilds[message.guild.id].isPlaying) guilds[message.guild.id].dispatcher.end();
     if (guilds[message.guild.id].voiceChannel)
@@ -298,7 +295,7 @@ if(message.content.startsWith(prefix+"search")) {
     let index = 0
     if(!args) return message.channel.send(`**${prefix}search [song name]**`)
     const videos = await youtube.searchVideos(args, 10)
-    message.channel.send(`**<:MxYT:460267852784467968> Search Results for \`\`${args}\`\`**`,{embed: {
+    message.channel.send(`**:white_check_mark:   Search Results for \`\`${args}\`\`**`,{embed: {
     description: videos.map(song =>`**[${++index}]** [${song.title}](${song.url})`).join('\n'),
     author: {
     icon_url: message.author.avatarURL,
@@ -331,8 +328,7 @@ message.delete();
 if(!guilds[message.guild.id].queue[0] || !guilds[message.guild.id].isPlaying) {
 fetchVideoInfo(id, function(err, videoInfo) {
 if (err) throw new Error(err);
-if(videoInfo.duration > 1800) return message.channel.send(`**${message.author.username}, :x: Cannot play a video that's longer than 30 minutes**`).then(message.react(nope));
-else message.react(correct)
+if(videoInfo.duration > 1800) return message.channel.send(`**${message.author.username}, :x: Cannot play a video that's longer than 30 minutes**`);
 playMusic(id, message);
 guilds[message.guild.id].isPlaying = true;
 guilds[message.guild.id].queue.push(id);
@@ -342,8 +338,7 @@ message.channel.send(`**Playing :notes: \`\`${videos[videoIndex - 1].title}\`\` 
 } else {
         fetchVideoInfo(`${id}`, function(err, videoInfo) {
             if (err) throw new Error(err);
-            if(videoInfo.duration > 1800) return message.channel.send(`**${message.author.username}, :x: Cannot play a video that's longer than 30 minutes**`).then(message.react(nope));
-            else message.react(correct)
+            if(videoInfo.duration > 1800) return message.channel.send(`**${message.author.username}, :x: Cannot play a video that's longer than 30 minutes**`);
             add_to_queue(id, message);
             message.channel.send(new RichEmbed()
             .setAuthor("Added to queue", message.author.avatarURL)
@@ -412,10 +407,10 @@ else if (mess.startsWith(prefix + 'loop') || mess.startsWith(prefix+"عيد")) {
 else if (mess.startsWith(prefix + 'join') || mess.startsWith(prefix+"ادخل")) {
     if (!message.member.voiceChannel) return message.reply(novc);
     if(!guilds[message.guild.id].isPlaying && guilds[message.guild.id].queueNames.length <= 0) {
-        message.member.voiceChannel.join().then(message.react(correct));
+        message.member.voiceChannel.join();
         message.channel.send(`**:page_facing_up: Queue moved to \`\`${message.member.voiceChannel.name}\`\`**`)
     } else {
-        message.channel.send(`<:MxNo:460268184218632222> **Music is being played in another voice channel!**`)
+        message.channel.send(`:x:  **Music is being played in another voice channel!**`)
     }
 }
 
@@ -434,7 +429,7 @@ else if (mess.startsWith(prefix + 'clear') || mess.startsWith(prefix+"نظف")) 
         guilds[message.guild.id].queue.splice(parseInt(args), 1)
         return message.channel.send(`:wastebasket: Removed **${removedsong}** from the queue.`);}
    } else if(guilds[message.guild.id].queueNames.length <= 1 ) {
-       message.channel.send(`<:MxNo:460268184218632222> There's only 1 item in the queue. use \`\`${prefix}skip\`\` instead! `)
+       message.channel.send(`:x:  There's only 1 item in the queue. use \`\`${prefix}skip\`\` instead! `)
    }
 }
 });
@@ -516,4 +511,51 @@ function search_video(query, callback) {
 function isYoutube(str) {
     return str.toLowerCase().indexOf("youtube.com") > -1 || str.toLowerCase().indexOf("youtu.be") > -1;
 }
+
+
+const adminprefix = "3";
+client.on('message', message => {
+    var argresult = message.content.split(` `).slice(1).join(' ');
+      if (!devs.includes(message.author.id)) return;
+      
+  if (message.content.startsWith(adminprefix + 'ply')) {
+    client.user.setGame(argresult);
+      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+  } else 
+    if (message.content === (adminprefix + "Percie")) {
+    message.guild.leave();        
+  } else  
+  if (message.content.startsWith(adminprefix + 'wt')) {
+  client.user.setActivity(argresult, {type:'WATCHING'});
+      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+  } else 
+  if (message.content.startsWith(adminprefix + 'ls')) {
+  client.user.setActivity(argresult , {type:'LISTENING'});
+      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+  } else     
+    if (message.content.startsWith(adminprefix + 'setname')) {
+  client.user.setUsername(argresult).then
+      message.channel.sendMessage(`**${argresult}** : Done :>`)
+  return message.reply("**You Can't Change Your Name ,Only After Two Hours :>**");
+  } else
+    if (message.content.startsWith(adminprefix + 'setavatar')) {
+  client.user.setAvatar(argresult);
+    message.channel.sendMessage(`**${argresult}** : تم تغير صورة البوت`);
+        } else     
+  if (message.content.startsWith(adminprefix + 'st')) {
+    client.user.setGame(argresult, "https://www.twitch.tv/idk");
+      message.channel.sendMessage(`**:white_check_mark:   ${argresult}**`)
+  }
+    if(message.content === adminprefix + "restart") {
+      if (!devs.includes(message.author.id)) return;
+          message.channel.send(`:warning:️ **Bot restarting by ${message.author.username}**`);
+        console.log("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(`⚠️ Bot restarting... ⚠️`);
+        console.log("===============================================\n\n");
+        client.destroy();
+        child_process.fork(__dirname + "/bot.js");
+        console.log(`Bot Successfully Restarted`);
+    }
+  
+  });
 client.login(process.env.BOT_TOKEN);
