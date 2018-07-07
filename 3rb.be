@@ -13,7 +13,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://darknessxd.tk/cdn/css/jquery.minicolors.min111.css" rel="stylesheet">
     <link href="http:///darknessxd.tk/r7al/alertify.rtl.css" rel="stylesheet">
-    <link href="http://darknessxd.tk/dssiniri88765/fuckkkkk.css" rel="stylesheet">
+    <link href="http://darknessxd.tk/dssiniri88765/fuckin.css" rel="stylesheet">
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
     <script src="http://darknessxd.tk/cdn/js/jquery.minicolors.min111.js"></script>
